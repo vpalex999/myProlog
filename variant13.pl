@@ -33,21 +33,24 @@ mylength([H|L],N):-
 
 
 /*
-2. Пусть имеется список структур "client": [cli-ent(a,29,3),client(b,29,6),client(c,40,2)]. 
+2. Пусть имеется список структур "client": [client(a,29,3),client(b,29,6),client(c,40,2)]. 
 Первым аргументом каждой структуры служит имя клиента, 
 вторым - суточный тариф, а третьим  -  количество дней, на которое взята автомашина. 
 Напишите правило, позволяющее вычислить итоговую сумму оплаты, 
 объединяющую выплаты всех клиентов, данные о которых содержатся в списке.
 
 тест:
-"client": [cli-ent(a,29,3),client(b,29,6),client(c,40,2)].
+"client": [client(a,29,3),client(b,29,6),client(c,40,2)].
 
 */
 
-'client'([cli-ent(a,29,3),client(b,29,6),client(c,40,2)]).
+'client'([client(a,29,3),client(b,29,6),client(c,40,2)]).
 
-showclients([H|T],X):-
-    cli-ent is H,
-    cli-ent(X,_,_),
-    showclients(T,X1),
-    X is X1.
+summclient(client(_,Tariff,Days),Summ):-
+    Summ is Tariff * Days.
+
+totalsumm([],0).
+totalsumm([Client|L], TotalSumm):-
+    summclient(Client, Summ),
+    totalsumm(L, OtherSumm),
+    TotalSumm is Summ + OtherSumm.
