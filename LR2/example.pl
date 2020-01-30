@@ -29,3 +29,10 @@ change(L,S):-
 Составьте программу subtree(+S, +T), определяющую, является ли S поддере-
 вом T.
 */
+
+subtree(X,X):-!.
+subtree(X,tree(L,_,_)):-
+    subtree(X,L).
+
+subtree(X,tree(_,_,R)):-
+    subtree(X,R).
